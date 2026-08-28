@@ -1,0 +1,93 @@
+---
+import Container from "../Container.astro";
+import { site } from "../../data/site";
+import { ArrowDown, ArrowUpRight } from "@lucide/astro";
+---
+
+<section
+  id="top"
+  aria-label="Introduction"
+  class="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pt-40 pb-16"
+>
+  <!-- Subtle grid backdrop — one flat decorative element, no imagery -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,black,transparent_75%)]"
+  >
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+  </div>
+
+  <Container class="flex flex-1 flex-col justify-center gap-12">
+    <div class="flex flex-col gap-3">
+      <p
+        data-reveal
+        data-reveal-kind="fade-up"
+        class="font-mono text-xs uppercase tracking-[0.24em] text-secondary"
+      >
+        {site.location} — Available for new work
+      </p>
+
+      <h1
+        data-reveal
+        data-reveal-kind="chars"
+        class="font-display font-medium tracking-[-0.04em] text-primary text-[clamp(3rem,10vw,8rem)] leading-[0.92]"
+      >
+        {site.name}.
+      </h1>
+
+      <p
+        data-reveal
+        data-reveal-kind="lines"
+        class="max-w-3xl font-display text-primary text-[clamp(1.5rem,3vw,2.75rem)] leading-[1.15] tracking-[-0.02em]"
+      >
+        {site.tagline}
+      </p>
+    </div>
+
+    <div
+      data-reveal
+      data-reveal-kind="fade-up"
+      class="flex flex-wrap items-center gap-8 pt-4"
+    >
+      <a
+        href="#work"
+        class="group inline-flex items-center gap-2 font-mono text-sm uppercase tracking-[0.18em] text-primary link-underline"
+      >
+        View work
+        <ArrowDown
+          size={16}
+          stroke-width={1.5}
+          class="transition-transform group-hover:translate-y-0.5"
+        />
+      </a>
+      <a
+        href="#contact"
+        class="group inline-flex items-center gap-2 font-mono text-sm uppercase tracking-[0.18em] text-secondary link-underline hover:text-primary"
+      >
+        Get in touch
+        <ArrowUpRight
+          size={16}
+          stroke-width={1.5}
+          class="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+        />
+      </a>
+    </div>
+  </Container>
+
+  <Container class="flex flex-col gap-4 pt-10 md:flex-row md:items-end md:justify-between">
+    <p
+      data-reveal
+      data-reveal-kind="fade-up"
+      class="max-w-md font-mono text-xs uppercase tracking-[0.2em] text-muted"
+    >
+      Portfolio — {new Date().getFullYear()} edition
+    </p>
+    <p
+      data-reveal
+      data-reveal-kind="fade-up"
+      class="font-mono text-xs uppercase tracking-[0.2em] text-muted"
+    >
+      Scroll ↓
+    </p>
+  </Container>
+</section>

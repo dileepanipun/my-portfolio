@@ -1,0 +1,36 @@
+---
+interface Props {
+  eyebrow: string;
+  index: string;
+  title: string;
+  class?: string;
+}
+
+const { eyebrow, index, title, class: className = "" } = Astro.props;
+---
+
+<header class={`grid grid-cols-1 gap-6 md:grid-cols-[auto_1fr] md:items-baseline md:gap-16 ${className}`}>
+  <div class="flex items-center gap-4">
+    <span
+      data-reveal
+      data-reveal-kind="fade-up"
+      class="font-mono text-xs uppercase tracking-[0.24em] text-secondary"
+    >
+      {index}
+    </span>
+    <span
+      data-reveal
+      data-reveal-kind="fade-up"
+      class="font-mono text-xs uppercase tracking-[0.24em] text-secondary"
+    >
+      {eyebrow}
+    </span>
+  </div>
+  <h2
+    data-reveal
+    data-reveal-kind="lines"
+    class="font-display font-medium text-primary text-[clamp(2.25rem,6vw,4.5rem)] leading-[1] tracking-[-0.035em]"
+  >
+    {title}
+  </h2>
+</header>

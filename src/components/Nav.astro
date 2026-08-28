@@ -1,0 +1,84 @@
+---
+import { site } from "../data/site";
+import Container from "./Container.astro";
+---
+
+<header
+  id="site-nav"
+  class="fixed inset-x-0 top-0 z-50 transition-colors duration-500"
+  data-nav-transparent
+>
+  <Container class="flex items-center justify-between py-5">
+    <a
+      href="#top"
+      class="font-display text-lg tracking-tight text-primary link-underline"
+      aria-label="Back to top"
+    >
+      {site.name}
+    </a>
+
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="flex items-center gap-8 font-mono text-xs uppercase tracking-[0.18em] text-secondary">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a href={item.href} class="link-underline transition-colors hover:text-primary">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      href={site.resumeUrl}
+      class="hidden md:inline-block font-mono text-xs uppercase tracking-[0.18em] text-primary link-underline"
+    >
+      Résumé
+    </a>
+
+    <button
+      type="button"
+      id="nav-toggle"
+      class="md:hidden inline-flex h-10 w-10 items-center justify-center text-primary"
+      aria-label="Toggle menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Toggle menu</span>
+      <span aria-hidden="true" class="relative block h-3 w-6">
+        <span class="absolute inset-x-0 top-0 h-px bg-current transition-transform"></span>
+        <span class="absolute inset-x-0 bottom-0 h-px bg-current transition-transform"></span>
+      </span>
+    </button>
+  </Container>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="pointer-events-none fixed inset-0 z-40 flex flex-col bg-bg opacity-0 transition-opacity duration-300 md:hidden"
+    aria-hidden="true"
+  >
+    <Container class="flex flex-1 flex-col justify-center gap-8 py-24">
+      <ul class="flex flex-col gap-6 font-display text-4xl tracking-tight text-primary">
+        {
+          site.nav.map((item) => (
+            <li>
+              <a href={item.href} data-mobile-link class="link-underline">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href={site.resumeUrl}
+        data-mobile-link
+        class="mt-4 self-start font-mono text-xs uppercase tracking-[0.18em] text-secondary link-underline"
+      >
+        Résumé
+      </a>
+    </Container>
+  </div>
+</header>

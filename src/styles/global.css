@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Fonts — self-hosted via @fontsource-variable
+   Swap these imports if the user supplies custom WOFF2 files in public/fonts/.
+   ========================================================================== */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* ==========================================================================
+   Design tokens (dark-mode only)
+   Exposed to Tailwind v4 via @theme so you can use classes like
+   `bg-bg`, `text-primary`, `font-display`, `text-display-lg`, etc.
+   ========================================================================== */
+@theme {
+  /* Colors */
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-surface-elevated: #161616;
+  --color-border: #222222;
+  --color-border-strong: #333333;
+  --color-primary: #f0f0f0;
+  --color-secondary: #888888;
+  --color-muted: #555555;
+  --color-accent: #e8e0d0;
+  --color-accent-hover: #FF5F1F;
+
+  /* Font families */
+  --font-sans:
+    "Inter Variable", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display:
+    "Inter Variable", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Type scale — display */
+  --text-display-xs: 2rem;         /* 32px */
+  --text-display-xs--line-height: 1.1;
+  --text-display-xs--letter-spacing: -0.02em;
+
+  --text-display-sm: 2.75rem;      /* 44px */
+  --text-display-sm--line-height: 1.05;
+  --text-display-sm--letter-spacing: -0.025em;
+
+  --text-display-md: 3.75rem;      /* 60px */
+  --text-display-md--line-height: 1;
+  --text-display-md--letter-spacing: -0.03em;
+
+  --text-display-lg: 5rem;         /* 80px */
+  --text-display-lg--line-height: 0.95;
+  --text-display-lg--letter-spacing: -0.035em;
+
+  --text-display-xl: 6rem;         /* 96px */
+  --text-display-xl--line-height: 0.92;
+  --text-display-xl--letter-spacing: -0.04em;
+
+  --text-display-2xl: 8rem;        /* 128px */
+  --text-display-2xl--line-height: 0.9;
+  --text-display-2xl--letter-spacing: -0.045em;
+
+  /* Container width — use with `max-w-page` class */
+  --container-page: 80rem;         /* 1280px */
+}
+
+/* ==========================================================================
+   Base — dark by default, no light-mode fork
+   ========================================================================== */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+  }
+
+  /* Typographic defaults — display family for headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* Selection color mirrors accent */
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  /* Focus ring — visible but restrained */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* Custom scrollbar (webkit) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-strong);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
+  }
+}
+
+/* ==========================================================================
+   Reveal utilities — used by GSAP + split-type in src/lib/splitReveal.ts
+   Initial state hides text/blocks; GSAP animates them in on ScrollTrigger.
+   Also declares a fallback for users with prefers-reduced-motion.
+   ========================================================================== */
+@layer utilities {
+  .reveal-lines .line,
+  .reveal-words .word,
+  .reveal-chars .char {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  .reveal-mask {
+    overflow: hidden;
+  }
+
+  /* Elements marked with data-reveal start invisible; GSAP flips them to visible */
+  [data-reveal] {
+    opacity: 0;
+  }
+
+  /* Respect users who don't want motion */
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Underline-reveal link style used across the site */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}

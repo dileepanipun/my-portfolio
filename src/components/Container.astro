@@ -1,0 +1,16 @@
+---
+import type { HTMLTag } from "astro/types";
+
+interface Props {
+  as?: HTMLTag;
+  class?: string;
+  wide?: boolean;
+}
+
+const { as: Tag = "div", class: className = "", wide = false } = Astro.props;
+const maxWidth = wide ? "max-w-[90rem]" : "max-w-[80rem]";
+---
+
+<Tag class={`mx-auto ${maxWidth} px-6 sm:px-8 lg:px-12 ${className}`}>
+  <slot />
+</Tag>

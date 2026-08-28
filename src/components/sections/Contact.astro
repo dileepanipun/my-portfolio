@@ -1,0 +1,60 @@
+---
+import Container from "../Container.astro";
+import { site } from "../../data/site";
+import { ArrowUpRight } from "@lucide/astro";
+---
+
+<section
+  id="contact"
+  aria-labelledby="contact-title"
+  class="border-t border-border py-40 md:py-56"
+>
+  <Container>
+    <div class="flex flex-col items-start gap-16">
+      <div class="flex items-center gap-4">
+        <span
+          data-reveal
+          data-reveal-kind="fade-up"
+          class="font-mono text-xs uppercase tracking-[0.24em] text-secondary"
+        >
+          05
+        </span>
+        <span
+          data-reveal
+          data-reveal-kind="fade-up"
+          class="font-mono text-xs uppercase tracking-[0.24em] text-secondary"
+        >
+          Contact
+        </span>
+      </div>
+
+      <h2
+        id="contact-title"
+        data-reveal
+        data-reveal-kind="chars"
+        class="font-display font-medium text-primary text-[clamp(3rem,9vw,7rem)] leading-[0.95] tracking-[-0.04em]"
+      >
+        Let&apos;s make<br />something calm.
+      </h2>
+
+      <div class="flex flex-col gap-6" data-reveal data-reveal-kind="fade-up">
+        <a
+          href={`mailto:${site.email}`}
+          class="group inline-flex items-center gap-3 font-display text-primary text-[clamp(1.75rem,4vw,3rem)] tracking-[-0.02em] link-underline"
+        >
+          {site.email}
+          <ArrowUpRight
+            size={28}
+            stroke-width={1.25}
+            class="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
+          />
+        </a>
+        <p class="max-w-xl text-secondary text-lg leading-[1.6]">
+          I read every email personally. If you&apos;d like to work together, share a link to what
+          you&apos;re building and a sentence or two about where you&apos;re stuck — I&apos;ll get
+          back within a couple of days.
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>

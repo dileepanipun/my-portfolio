@@ -1,0 +1,48 @@
+---
+import Container from "../Container.astro";
+import SectionHeader from "../SectionHeader.astro";
+import { experience } from "../../data/experience";
+---
+
+<section
+  id="experience"
+  aria-labelledby="experience-title"
+  class="border-t border-border py-32 md:py-40"
+>
+  <Container>
+    <SectionHeader index="04" eyebrow="Career" title="Where I've been." class="mb-24" />
+
+    <ol class="flex flex-col gap-0">
+      {
+        experience.map((entry) => (
+          <li
+            class="grid grid-cols-1 items-start gap-6 border-t border-border py-12 last:border-b md:grid-cols-[180px_1fr] md:gap-16 md:py-16"
+            data-reveal
+            data-reveal-kind="fade-up"
+          >
+            <div class="flex flex-col gap-1 font-mono text-xs uppercase tracking-[0.2em] text-secondary">
+              <span>{entry.start} — {entry.end}</span>
+              {entry.location && <span class="text-muted">{entry.location}</span>}
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <h3 class="font-display text-3xl tracking-[-0.02em] text-primary md:text-4xl">
+                {entry.role}
+                <span class="text-muted"> / </span>
+                <span class="text-secondary">{entry.company}</span>
+              </h3>
+              <p class="max-w-2xl text-secondary text-base leading-[1.6]">{entry.summary}</p>
+              {entry.highlights && (
+                <ul class="mt-2 flex flex-col gap-2 border-l border-border pl-6 text-secondary text-sm leading-[1.6]">
+                  {entry.highlights.map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </Container>
+</section>

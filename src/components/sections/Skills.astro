@@ -1,0 +1,44 @@
+---
+import Container from "../Container.astro";
+import SectionHeader from "../SectionHeader.astro";
+import { skillCategories } from "../../data/skills";
+---
+
+<section id="skills" aria-labelledby="skills-title" class="border-t border-border py-32 md:py-40">
+  <Container>
+    <SectionHeader
+      index="02"
+      eyebrow="Toolkit"
+      title="Building blocks I reach for."
+      class="mb-24"
+    />
+
+    <ul class="grid grid-cols-1 gap-x-16 gap-y-20 md:grid-cols-2">
+      {
+        skillCategories.map((cat) => {
+          const Icon = cat.icon;
+          return (
+            <li class="flex flex-col gap-6" data-reveal data-reveal-kind="fade-up">
+              <div class="flex items-center gap-4">
+                <span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-primary">
+                  <Icon size={18} stroke-width={1.5} />
+                </span>
+                <h3 class="font-display text-3xl tracking-[-0.02em] text-primary">
+                  {cat.title}
+                </h3>
+              </div>
+              <p class="max-w-md text-secondary text-base leading-[1.6]">{cat.caption}</p>
+              <ul class="flex flex-wrap gap-x-2 gap-y-2 font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+                {cat.items.map((item) => (
+                  <li class="rounded-full border border-border px-3 py-1.5 transition-colors hover:border-primary hover:text-primary">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </Container>
+</section>

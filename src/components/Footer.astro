@@ -1,0 +1,64 @@
+---
+import { site } from "../data/site";
+import Container from "./Container.astro";
+import SocialIcon from "./SocialIcon.astro";
+import { ArrowUpRight } from "@lucide/astro";
+---
+
+<footer class="border-t border-border pb-12 pt-24">
+  <Container class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+    <div class="flex flex-col gap-4">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-secondary">
+        Elsewhere
+      </p>
+      <ul class="flex items-center gap-3 text-secondary">
+        <li>
+          <a
+            href={site.socials.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:text-primary"
+          >
+            <SocialIcon name="github" size={15} />
+          </a>
+        </li>
+        <li>
+          <a
+            href={site.socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:text-primary"
+          >
+            <SocialIcon name="linkedin" size={15} />
+          </a>
+        </li>
+        <li>
+          <a
+            href={site.socials.x}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X (Twitter)"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:text-primary"
+          >
+            <SocialIcon name="x" size={14} />
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col items-start gap-4 md:items-end">
+      <a
+        href={`mailto:${site.email}`}
+        class="inline-flex items-center gap-2 font-display text-2xl tracking-tight text-primary link-underline"
+      >
+        {site.email}
+        <ArrowUpRight size={20} stroke-width={1.5} />
+      </a>
+      <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+        &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
+      </p>
+    </div>
+  </Container>
+</footer>

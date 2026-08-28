@@ -1,0 +1,52 @@
+---
+import Container from "../Container.astro";
+import SectionHeader from "../SectionHeader.astro";
+import { site } from "../../data/site";
+---
+
+<section id="about" aria-labelledby="about-title" class="border-t border-border py-32 md:py-40">
+  <Container>
+    <SectionHeader index="01" eyebrow="About" title="A quick introduction." class="mb-24" />
+
+    <div class="grid grid-cols-1 gap-16 lg:grid-cols-[3fr_2fr] lg:gap-24">
+      <div class="flex flex-col gap-8">
+        <p
+          data-reveal
+          data-reveal-kind="lines"
+          class="font-display text-primary text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.15] tracking-[-0.02em]"
+        >
+          I&apos;m {site.name.split(" ")[0]} — a {site.role.toLowerCase()} who cares about the
+          space between elements as much as the elements themselves.
+        </p>
+
+        <p
+          data-reveal
+          data-reveal-kind="lines"
+          class="max-w-2xl text-secondary text-lg leading-[1.65]"
+        >
+          For the last decade I&apos;ve been building the kind of software I want to use — quiet,
+          fast, honest about its limits. My work tends to sit between design and engineering:
+          building the interface, then the system underneath it, then the marketing site that
+          explains why it matters.
+        </p>
+      </div>
+
+      <aside class="flex flex-col gap-6 border-t border-border pt-8 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+        <div class="flex flex-col gap-2" data-reveal data-reveal-kind="fade-up">
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Based in</p>
+          <p class="font-display text-2xl tracking-tight text-primary">{site.location}</p>
+        </div>
+        <div class="flex flex-col gap-2" data-reveal data-reveal-kind="fade-up">
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Focus</p>
+          <p class="font-display text-2xl tracking-tight text-primary">
+            Product design & engineering
+          </p>
+        </div>
+        <div class="flex flex-col gap-2" data-reveal data-reveal-kind="fade-up">
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Current</p>
+          <p class="font-display text-2xl tracking-tight text-primary">Open to select projects</p>
+        </div>
+      </aside>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/Container.astro";
+import { ArrowLeft } from "@lucide/astro";
+---
+
+<Layout title="404 — Page Not Found" description="This page could not be found.">
+  <section class="flex min-h-[80svh] items-center pt-40 pb-24">
+    <Container class="flex flex-col items-start gap-10">
+      <p class="font-mono text-xs uppercase tracking-[0.24em] text-secondary">
+        Error / 404
+      </p>
+      <h1 class="font-display font-medium text-primary text-[clamp(4rem,14vw,12rem)] leading-[0.9] tracking-[-0.045em]">
+        Not here.
+      </h1>
+      <p class="max-w-xl text-secondary text-lg leading-[1.6]">
+        The page you&apos;re looking for doesn&apos;t exist — or it did once and has since moved
+        on. Head back to the homepage and try again.
+      </p>
+      <a
+        href="/"
+        class="group inline-flex items-center gap-2 font-mono text-sm uppercase tracking-[0.18em] text-primary link-underline"
+      >
+        <ArrowLeft
+          size={16}
+          stroke-width={1.5}
+          class="transition-transform group-hover:-translate-x-0.5"
+        />
+        Back to home
+      </a>
+    </Container>
+  </section>
+</Layout>
