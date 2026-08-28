@@ -85,9 +85,19 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? "https://example.com").toStrin
     <script>
       import { initNav } from "../lib/nav";
       import { initReveals } from "../lib/splitReveal";
+      import { initFloatingIcons, destroyFloatingIcons } from "../lib/floatingIcons";
 
       initNav();
       initReveals();
+      initFloatingIcons();
+
+      // Tidy up GSAP tweens + listeners if Astro view transitions swap the page.
+      document.addEventListener("astro:before-swap", () => {
+        destroyFloatingIcons();
+      });
+      document.addEventListener("astro:page-load", () => {
+        initFloatingIcons();
+      });
     </script>
   </body>
 </html>

@@ -1,0 +1,138 @@
+---
+/**
+ * Ambient floating tech icons layer for the hero.
+ *
+ * - Absolutely positioned inside the hero container.
+ * - Desktop / tablet only (hidden below md).
+ * - `pointer-events: none` end-to-end — never intercepts clicks.
+ * - SVGs are inlined so `currentColor` can drive the glow tween.
+ *
+ * Behavior is wired up in `src/lib/floatingIcons.ts`, initialized from
+ * the page layout after DOM ready.
+ *
+ * Structure per icon:
+ *   <span.floating-icon>              ← positioner (left/top %, translate-anchor)
+ *     <span.floating-icon__inner>     ← GSAP animates transform here (drift/scale/rot)
+ *       <svg />                       ← the mark
+ *     </span>
+ *   </span>
+ */
+
+import { heroFloatingIcons } from "./floatingIconsConfig";
+
+// Raw SVG imports — Astro/Vite `?raw` returns the file as a string.
+// Each source SVG has viewBox="0 0 24 24" and no explicit fill,
+// so `currentColor` on the wrapper cascades through.
+import angular     from "../../assets/floating-icons/angular.svg?raw";
+import claude      from "../../assets/floating-icons/claude.svg?raw";
+import css         from "../../assets/floating-icons/css.svg?raw";
+import docker      from "../../assets/floating-icons/docker.svg?raw";
+import figma       from "../../assets/floating-icons/figma.svg?raw";
+import git         from "../../assets/floating-icons/git.svg?raw";
+import github      from "../../assets/floating-icons/github.svg?raw";
+import html5       from "../../assets/floating-icons/html5.svg?raw";
+import javascript  from "../../assets/floating-icons/javascript.svg?raw";
+import sass        from "../../assets/floating-icons/sass.svg?raw";
+import tailwindcss from "../../assets/floating-icons/tailwindcss.svg?raw";
+import typescript  from "../../assets/floating-icons/typescript.svg?raw";
+
+const svgById: Record<string, string> = {
+  angular,
+  claude,
+  css,
+  docker,
+  figma,
+  git,
+  github,
+  html5,
+  javascript,
+  sass,
+  tailwindcss,
+  typescript,
+};
+
+// Drop the browser-tooltip <title> from Simple Icons markup.
+const cleanSvg = (raw: string) =>
+  raw.replace(/<title>[\s\S]*?<\/title>/, "");
+---
+
+<div
+  class="floating-icons-layer pointer-events-none absolute inset-0 z-0 hidden overflow-hidden md:block"
+  aria-hidden="true"
+  data-floating-icons-root
+>
+  {
+    heroFloatingIcons.map((icon) => {
+      const raw = svgById[icon.id];
+      if (!raw) return null;
+      return (
+        <span
+          class:list={["floating-icon", `floating-icon--${icon.layer}`]}
+          data-floating-icon
+          data-layer={icon.layer}
+          data-rot={icon.rotation ?? 0}
+          data-delay={icon.driftDelay}
+          style={`--x:${icon.x}%; --y:${icon.y}%; --size:${icon.size}px;`}
+        >
+          <span class="floating-icon__inner" set:html={cleanSvg(raw)} />
+        </span>
+      );
+    })
+  }
+</div>
+
+<style is:global>
+  /* ==========================================================================
+     Floating icons — ambient hero layer
+     ========================================================================== */
+
+  .floating-icon {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--size);
+    height: var(--size);
+    /* Anchor icon center on (x,y). GSAP does NOT touch this outer transform. */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    display: block;
+  }
+
+  .floating-icon__inner {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--color-primary);
+    /* Rest state — will be tweened by GSAP for glow/proximity */
+    opacity: 0.3;
+    will-change: transform, opacity, filter;
+    /* GSAP owns this transform: drift (x,y), rotation, and scale. */
+  }
+
+  .floating-icon__inner svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: currentColor;
+  }
+
+  /* Depth layers — opacity + blur + saturation, NOT transform (GSAP owns that) */
+  .floating-icon--far  .floating-icon__inner {
+    opacity: 0.16;
+    filter: blur(1.2px) saturate(0.55);
+  }
+  .floating-icon--mid  .floating-icon__inner {
+    opacity: 0.28;
+    filter: saturate(0.7);
+  }
+  .floating-icon--near .floating-icon__inner {
+    opacity: 0.4;
+  }
+
+  /* Reduced motion — icons render static at their rest opacity, no drift, no glow */
+  @media (prefers-reduced-motion: reduce) {
+    .floating-icon__inner {
+      transition: none !important;
+    }
+  }
+</style>

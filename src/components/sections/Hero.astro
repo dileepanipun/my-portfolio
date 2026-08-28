@@ -4,6 +4,7 @@ import Container from "../Container.astro";
 import { site } from "../../data/site";
 import { ArrowDown, ArrowUpRight } from "@lucide/astro";
 import portrait from "../../assets/images/dileepa nipun salinda.webp";
+import FloatingIcons from "../hero/FloatingIcons.astro";
 ---
 
 <section
@@ -18,6 +19,9 @@ import portrait from "../../assets/images/dileepa nipun salinda.webp";
   >
     <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
   </div>
+
+  <!-- Ambient floating tech icons (desktop/tablet only) -->
+  <FloatingIcons />
 
   <!--
     Portrait — fixed-width column, bottom-anchored, sitting left of page center.
