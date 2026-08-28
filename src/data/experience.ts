@@ -10,29 +10,29 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
-    role: "Senior UI/UX Designer & Frontend Engineer",
-    company: "Soft Gallery Pvt. Ltd.",
-    location: "Ja-Ela, Sri Lanka",
-    start: "Jan 2024",
+    role: "Senior Software Engineer",
+    company: "We Make Platforms",
+    location: "Puerto Rico (Remote)",
+    start: "Dec 2023",
     end: "Present",
     summary:
-      "Leading a team of designers and developers, overseeing the UI/UX and frontend engineering of the company's HR solution and other key products. Responsible for quality standards, team growth, and timely delivery.",
+      "Working as a Senior Software Engineer at an international product company, contributing to platform-level engineering across the full stack.",
     highlights: [
-      "Managing and mentoring a group of designers and frontend engineers across multiple concurrent projects.",
-      "Driving continuous improvement of the HR solution's user experience using Angular, SCSS, and modern design patterns.",
+      "Joined as a senior engineer bringing design systems and frontend architecture expertise to the team.",
+      "Working remotely across time zones on platform products at scale.",
     ],
   },
   {
-    role: "Junior UI/UX Designer & Frontend Engineer",
+    role: "UI/UX Designer & Frontend Engineer",
     company: "Soft Gallery Pvt. Ltd.",
     location: "Ja-Ela, Sri Lanka",
     start: "Jan 2021",
     end: "Dec 2023",
     summary:
-      "Played a central role in the design and frontend engineering of enterprise products. Spearheaded the UI creation of the Gallery Invoice project from scratch, handling complex data visualizations and charting.",
+      "Led design and frontend engineering of enterprise HR and invoicing products. Grew from individual contributor to team lead, overseeing a group of designers and frontend engineers.",
     highlights: [
       "Built the Gallery Invoice product from zero — complex data tables, charts, and multi-source integrations.",
-      "Provided guidance and mentorship to interns on frontend best practices and Angular patterns.",
+      "Mentored interns and junior engineers on Angular patterns, SCSS architecture, and best practices.",
     ],
   },
   {

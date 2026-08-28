@@ -4,10 +4,10 @@
  */
 export const site = {
   name: "Dileepa Nipun",
-  role: "UI/UX Designer & Frontend Engineer",
+  role: "Senior Software Engineer & UI/UX Designer",
   tagline: "Designing and engineering interfaces where craft meets clarity.",
   description:
-    "Portfolio of Dileepa Nipun — a UI/UX Designer and Frontend Engineer based in Galle, Sri Lanka, with 5+ years of experience building considered web interfaces end-to-end.",
+    "Portfolio of Dileepa Nipun — a Senior Software Engineer and UI/UX Designer based in Galle, Sri Lanka, with 5+ years of experience building considered web interfaces end-to-end.",
   email: "dileepa9646@gmail.com",
   location: "Galle, Sri Lanka",
   resumeUrl: "/resume.pdf",
