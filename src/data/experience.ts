@@ -10,38 +10,42 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
-    role: "Senior Product Engineer",
-    company: "Northwind Labs",
-    location: "Remote",
-    start: "2023",
+    role: "Senior UI/UX Designer & Frontend Engineer",
+    company: "Soft Gallery Pvt. Ltd.",
+    location: "Ja-Ela, Sri Lanka",
+    start: "Jan 2024",
     end: "Present",
     summary:
-      "Leading the design-engineering effort on Northwind's flagship analytics product. Shipping features end-to-end, from architectural design to interface polish.",
+      "Leading a team of designers and developers, overseeing the UI/UX and frontend engineering of the company's HR solution and other key products. Responsible for quality standards, team growth, and timely delivery.",
     highlights: [
-      "Rebuilt the reporting engine, cutting p95 render time from 4.1s to 380ms.",
-      "Introduced a design token pipeline shared across web and mobile clients.",
+      "Managing and mentoring a group of designers and frontend engineers across multiple concurrent projects.",
+      "Driving continuous improvement of the HR solution's user experience using Angular, SCSS, and modern design patterns.",
+    ],
+  },
+  {
+    role: "Junior UI/UX Designer & Frontend Engineer",
+    company: "Soft Gallery Pvt. Ltd.",
+    location: "Ja-Ela, Sri Lanka",
+    start: "Jan 2021",
+    end: "Dec 2023",
+    summary:
+      "Played a central role in the design and frontend engineering of enterprise products. Spearheaded the UI creation of the Gallery Invoice project from scratch, handling complex data visualizations and charting.",
+    highlights: [
+      "Built the Gallery Invoice product from zero — complex data tables, charts, and multi-source integrations.",
+      "Provided guidance and mentorship to interns on frontend best practices and Angular patterns.",
     ],
   },
   {
     role: "Frontend Engineer",
-    company: "Meridian",
-    location: "Singapore",
-    start: "2021",
-    end: "2023",
+    company: "Pixzel Technologies",
+    location: "Galle, Sri Lanka",
+    start: "Aug 2019",
+    end: "May 2020",
     summary:
-      "Owned the design system and public marketing surface for Meridian's fintech platform. Set the bar for accessibility and motion craft across the org.",
+      "Designed and developed user interfaces for client web applications. Gained deep experience with Angular and expanded into Android development, delivering a doctor channeling queue management system.",
     highlights: [
-      "Shipped the v2 marketing site with a 41% lift in demo bookings.",
-      "Trained 12 engineers on modern CSS + accessible interaction patterns.",
+      "Built a doctor channeling system with Bluetooth data transfer — local environment web and Android app.",
+      "Expanded the stack with Angular for frontend and Spring Boot for API integration.",
     ],
-  },
-  {
-    role: "Design Technologist",
-    company: "Independent",
-    location: "Remote",
-    start: "2019",
-    end: "2021",
-    summary:
-      "Contract work with early-stage startups on brand systems, product design, and shippable front-end prototypes.",
   },
 ];

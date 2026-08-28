@@ -1,21 +1,21 @@
 /**
  * Central site metadata.
- * Update the placeholders here — every layout/page pulls from this file.
+ * Update this file to change any global content — every layout/page pulls from here.
  */
 export const site = {
-  name: "Your Name",
-  role: "Designer & Developer",
-  tagline: "Building calm, considered interfaces on the web.",
+  name: "Dileepa Nipun",
+  role: "UI/UX Designer & Frontend Engineer",
+  tagline: "Designing and engineering interfaces where craft meets clarity.",
   description:
-    "Portfolio of Your Name — a designer and developer crafting minimal, typography-led interfaces and thoughtful digital products.",
-  email: "hello@example.com",
-  location: "Earth",
+    "Portfolio of Dileepa Nipun — a UI/UX Designer and Frontend Engineer based in Galle, Sri Lanka, with 5+ years of experience building considered web interfaces end-to-end.",
+  email: "dileepa9646@gmail.com",
+  location: "Galle, Sri Lanka",
   resumeUrl: "/resume.pdf",
   ogImage: "/og.png",
   socials: {
-    github: "https://github.com/your-handle",
-    linkedin: "https://www.linkedin.com/in/your-handle/",
-    x: "https://x.com/your-handle",
+    github: "https://github.com/dileepanipun",
+    linkedin: "https://www.linkedin.com/in/dileepa-nipun-salinda-270013169/",
+    x: "https://x.com/dileepanipun",
   },
   nav: [
     { label: "Work", href: "#work" },

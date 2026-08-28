@@ -1,5 +1,5 @@
 import type { AstroComponent } from "@lucide/astro";
-import { Code, Server, Smartphone, Wrench } from "@lucide/astro";
+import { Code, Palette, Server, Wrench } from "@lucide/astro";
 
 export interface SkillCategory {
   title: string;
@@ -11,49 +11,58 @@ export interface SkillCategory {
 export const skillCategories: SkillCategory[] = [
   {
     title: "Frontend",
-    caption: "Interface, motion, systems.",
+    caption: "Component-first interfaces, pixel-perfect.",
     icon: Code,
     items: [
+      "Angular",
       "TypeScript",
-      "React",
-      "Astro",
-      "Svelte",
+      "HTML5 / CSS3",
+      "SCSS / SASS",
       "Tailwind CSS",
-      "GSAP",
-      "Design Tokens",
+      "Bootstrap",
+      "JavaScript",
+      "jQuery",
     ],
   },
   {
-    title: "Backend",
-    caption: "APIs, data, infrastructure.",
+    title: "Design",
+    caption: "From wireframe to polished prototype.",
+    icon: Palette,
+    items: [
+      "Figma",
+      "Adobe XD",
+      "Sketch",
+      "InVision",
+      "Adobe Photoshop",
+      "Adobe Illustrator",
+      "After Effects",
+    ],
+  },
+  {
+    title: "Backend & Data",
+    caption: "APIs, databases, and server logic.",
     icon: Server,
     items: [
-      "Node.js",
-      "Rust",
-      "Go",
-      "PostgreSQL",
-      "Redis",
-      "REST & GraphQL",
-      "Docker",
+      "PHP",
+      "Laravel",
+      "MySQL",
+      "MongoDB",
+      "Spring Boot",
+      "REST APIs",
     ],
-  },
-  {
-    title: "Mobile",
-    caption: "Cross-platform native craft.",
-    icon: Smartphone,
-    items: ["React Native", "Swift", "Kotlin", "Expo", "Fastlane"],
   },
   {
     title: "Tooling",
-    caption: "Build, ship, iterate.",
+    caption: "The workflow layer that ships products.",
     icon: Wrench,
     items: [
-      "Figma",
-      "Git & GitHub Actions",
-      "Vercel & Cloudflare",
-      "Playwright",
-      "Vitest",
-      "pnpm",
+      "Git / GitHub / GitLab",
+      "JIRA",
+      "Postman",
+      "Gulp",
+      "Flutter",
+      "Android (Java)",
+      "WebStorm / VS Code",
     ],
   },
 ];
