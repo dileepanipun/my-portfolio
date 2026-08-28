@@ -52,8 +52,8 @@ export const heroFloatingIcons: FloatingIconConfig[] = [
   { id: "github",     label: "GitHub",     x: 84, y: 90, size: 22, layer: "far",  driftDelay: 2.4, rotation: 8 },
 
   // ── Upper-left sky (above portrait, for balance) ───
-  { id: "html5",      label: "HTML5",      x: 8,  y: 14, size: 26, layer: "mid",  driftDelay: 1.4, rotation: 5 },
-  { id: "css",        label: "CSS",        x: 20, y: 22, size: 22, layer: "far",  driftDelay: 2.0, rotation: -7 },
+  { id: "html5",      label: "HTML5",      x: 24,  y: 14, size: 26, layer: "mid",  driftDelay: 1.4, rotation: 5 },
+  { id: "css",        label: "CSS",        x: 32, y: 22, size: 22, layer: "far",  driftDelay: 2.0, rotation: -7 },
   { id: "figma",      label: "Figma",      x: 14, y: 34, size: 28, layer: "near", driftDelay: 0.3, rotation: 2 },
 
   // ── Center-top drift (single, small, low opacity) ──

@@ -11,6 +11,10 @@
  *   3. Parallax tilt: the whole layer softly leans a few pixels based on
  *      cursor position across the hero. Layers ("far" / "mid" / "near")
  *      travel at different weights to fake depth.
+ *   4. Random blinks: on a randomized interval, 1–2 idle icons briefly
+ *      auto-play the exact same lit/rest tween as the proximity hover,
+ *      giving the layer a subtle "alive" pulse. Icons currently lit by the
+ *      cursor are skipped.
  *
  * Constraints:
  *   - Runs on desktop/tablet only. The layer is `display:none` below md,
@@ -40,8 +44,17 @@ interface IconInstance {
   cx: number;              // last-measured viewport center x
   cy: number;              // last-measured viewport center y
   active: boolean;         // currently inside proximity radius
+  blinking: boolean;       // currently mid random-blink
   driftTween?: gsap.core.Tween;
+  blinkTl?: gsap.core.Timeline;
 }
+
+// Random-blink scheduler tunables.
+const BLINK_INTERVAL_MIN = 1.2; // seconds
+const BLINK_INTERVAL_MAX = 3.5; // seconds
+const BLINK_HOLD_MIN = 0.15;    // seconds icon stays "lit" before easing back
+const BLINK_HOLD_MAX = 0.4;
+const BLINK_MULTI_CHANCE = 0.3; // chance to blink 2 icons at once
 
 let icons: IconInstance[] = [];
 let root: HTMLElement | null = null;
@@ -51,6 +64,7 @@ let lastMouseX = 0;
 let lastMouseY = 0;
 let cleanupFns: Array<() => void> = [];
 let initialized = false;
+let blinkCall: gsap.core.Tween | null = null;
 
 function prefersReducedMotion(): boolean {
   return (
@@ -105,6 +119,47 @@ function startIdleDrift(): void {
   });
 }
 
+/** Per-layer "lit" scale used by both proximity hover and random blinks. */
+function nearScaleFor(layer: "far" | "mid" | "near"): number {
+  return layer === "far" ? 0.92 : layer === "near" ? 1.25 : 1.15;
+}
+
+/** Per-layer rest scale (mirrors the initial gsap.set in startIdleDrift). */
+function restScaleFor(layer: "far" | "mid" | "near"): number {
+  return layer === "far" ? 0.78 : layer === "near" ? 1.1 : 1;
+}
+
+/** Per-layer rest filter — restores the CSS blur/saturate baseline. */
+function restFilterFor(layer: "far" | "mid" | "near"): string {
+  return layer === "far"
+    ? "blur(1.2px) saturate(0.55) drop-shadow(0 0 0px rgba(0,0,0,0))"
+    : "saturate(0.7) drop-shadow(0 0 0px rgba(0,0,0,0))";
+}
+
+/** Tween an icon into its "hovered/lit" state. Shared by proximity + blink. */
+function tweenLit(ic: IconInstance): gsap.core.Tween {
+  return gsap.to(ic.inner, {
+    opacity: 1,
+    scale: nearScaleFor(ic.layer),
+    filter: `drop-shadow(0 0 10px ${GLOW_COLOR}) saturate(1)`,
+    duration: 0.28,
+    ease: "power2.out",
+    overwrite: "auto",
+  });
+}
+
+/** Tween an icon back to its resting layer state. Shared by proximity + blink. */
+function tweenRest(ic: IconInstance): gsap.core.Tween {
+  return gsap.to(ic.inner, {
+    opacity: ic.baseOpacity,
+    scale: restScaleFor(ic.layer),
+    filter: restFilterFor(ic.layer),
+    duration: 0.9,
+    ease: "power2.out",
+    overwrite: "auto",
+  });
+}
+
 /** Run the proximity + parallax pass — called from an rAF tick. */
 function proximityFrame(): void {
   rafPending = false;
@@ -140,30 +195,56 @@ function proximityFrame(): void {
 
     if (isNear && !ic.active) {
       ic.active = true;
-      gsap.to(ic.inner, {
-        opacity: 1,
-        scale: ic.layer === "far" ? 0.92 : ic.layer === "near" ? 1.25 : 1.15,
-        filter: `drop-shadow(0 0 10px ${GLOW_COLOR}) saturate(1)`,
-        duration: 0.28,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
+      tweenLit(ic);
     } else if (!isNear && ic.active) {
       ic.active = false;
-      const restScale = ic.layer === "far" ? 0.78 : ic.layer === "near" ? 1.1 : 1;
-      const restFilter =
-        ic.layer === "far"
-          ? "blur(1.2px) saturate(0.55) drop-shadow(0 0 0px rgba(0,0,0,0))"
-          : "saturate(0.7) drop-shadow(0 0 0px rgba(0,0,0,0))";
-      gsap.to(ic.inner, {
-        opacity: ic.baseOpacity,
-        scale: restScale,
-        filter: restFilter,
-        duration: 0.9,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
+      tweenRest(ic);
     }
+  });
+}
+
+/**
+ * Play a one-shot blink on a single icon — identical visual to the hover glow:
+ * quick lit tween → brief hold → slow ease back to rest.
+ * Skipped if the cursor is already lighting this icon.
+ */
+function playBlink(ic: IconInstance): void {
+  if (ic.active || ic.blinking) return;
+  ic.blinking = true;
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      ic.blinking = false;
+      ic.blinkTl = undefined;
+    },
+  });
+
+  tl.add(tweenLit(ic))
+    .to(ic.inner, { duration: gsap.utils.random(BLINK_HOLD_MIN, BLINK_HOLD_MAX) })
+    .add(tweenRest(ic));
+
+  ic.blinkTl = tl;
+}
+
+/** Pick 1–2 eligible icons at random and blink them. */
+function triggerRandomBlink(): void {
+  const candidates = icons.filter((ic) => !ic.active && !ic.blinking);
+  if (candidates.length === 0) return;
+
+  const count = candidates.length > 1 && Math.random() < BLINK_MULTI_CHANCE ? 2 : 1;
+  for (let i = 0; i < count && candidates.length > 0; i++) {
+    const idx = Math.floor(Math.random() * candidates.length);
+    const [ic] = candidates.splice(idx, 1);
+    playBlink(ic);
+  }
+}
+
+/** Recursively schedule the next blink at a randomized interval. */
+function scheduleNextBlink(): void {
+  const delay = gsap.utils.random(BLINK_INTERVAL_MIN, BLINK_INTERVAL_MAX);
+  blinkCall = gsap.delayedCall(delay, () => {
+    triggerRandomBlink();
+    scheduleNextBlink();
   });
 }
 
@@ -216,6 +297,7 @@ export function initFloatingIcons(): void {
       cx: 0,
       cy: 0,
       active: false,
+      blinking: false,
     };
   });
 
@@ -226,6 +308,7 @@ export function initFloatingIcons(): void {
   if (prefersReducedMotion()) return;
 
   startIdleDrift();
+  scheduleNextBlink();
 
   heroSection.addEventListener("mousemove", onMouseMove, { passive: true });
   window.addEventListener("resize", onResize, { passive: true });
@@ -240,8 +323,11 @@ export function initFloatingIcons(): void {
 export function destroyFloatingIcons(): void {
   cleanupFns.forEach((fn) => fn());
   cleanupFns = [];
+  blinkCall?.kill();
+  blinkCall = null;
   icons.forEach((ic) => {
     ic.driftTween?.kill();
+    ic.blinkTl?.kill();
     gsap.killTweensOf(ic.inner);
     gsap.killTweensOf(ic.el);
   });
